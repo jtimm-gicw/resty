@@ -1,48 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './app.scss';
 
-// Let's talk about using index.js and some other name in the component folder
-// There's pros and cons for each way of doing this ...
 import Header from './components/header';
 import Footer from './components/footer';
 import Form from './components/form';
 import Results from './components/results';
 
-class App extends React.Component {
+function App() {
+  // State for the current request, response data, loading, and history
+  const [request, setRequest] = useState({}); // The method + URL (and maybe body if it’s POST/PUT)
+  const [data, setData] = useState(null); // The API data you want to show
+  const [loading, setLoading] = useState(false); // Whether you’re waiting on results
+  const [history, setHistory] = useState([]);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: null,
-      requestParams: {},
-    };
-  }
+  const callApi = (request) => {
+    setRequest(request);
+    setLoading(true);
 
-  callApi = (requestParams) => {
-    // mock output
-    const data = {
-      count: 2,
-      results: [
-        {name: 'fake thing 1', url: 'http://fakethings.com/1'},
-        {name: 'fake thing 2', url: 'http://fakethings.com/2'},
-      ],
-    };
-    this.setState({data, requestParams});
-  }
+    // Add the request to history
+    setHistory((prev) => [
+      ...prev,
+      { method: request.method, url: request.url }
+    ]);
 
-  render() {
-    return (
-      <React.Fragment>
-        <Header />
-        <div>Request Method: {this.state.requestParams.method}</div>
-        <div>URL: {this.state.requestParams.url}</div>
-        <Form handleApiCall={this.callApi} />
-        <Results data={this.state.data} />
-        <Footer />
-      </React.Fragment>
-    );
-  }
+    // Mock API response
+    setTimeout(() => {
+      const mockData = {
+        count: 2,
+        results: [
+          { name: 'fake thing 1', url: 'http://fakethings.com/1' },
+          { name: 'fake thing 2', url: 'http://fakethings.com/2' },
+        ],
+      };
+
+      setData(mockData);
+      setLoading(false);
+    }, 1000); // simulate network delay
+  };
+
+  return (
+    <React.Fragment>
+      <Header />
+      <div>Request Method: {request.method}</div>
+      <div>URL: {request.url}</div>
+
+      {/* Pass callApi to Form */}
+      <Form handleApiCall={callApi} />
+
+      {/* Pass history and loading state to Results */}
+      <Results data={data} loading={loading} history={history} />
+
+      <Footer />
+    </React.Fragment>
+  );
 }
 
 export default App;

@@ -1,4 +1,3 @@
-// results.scss
 $primaryColor: #4a90e2;
 $accentColor: #ff6f61;
 $lightBg: #f9f9f9;
@@ -14,8 +13,56 @@ section {
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
+  h2 {
+    margin-top: 1rem;
+    color: $primaryColor;
+    font-size: 1.2rem;
+    border-bottom: 2px solid lighten($primaryColor, 40%);
+    padding-bottom: 0.25rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 1.5rem 0;
+
+    li {
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+      color: $darkText;
+    }
+
+    .method {
+      display: inline-block;
+      min-width: 60px;
+      text-align: center;
+      padding: 4px 10px;
+      margin-right: 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      color: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .get {
+      background: #4caf50; // green
+    }
+    .post {
+      background: $primaryColor; // matches site theme
+    }
+    .put {
+      background: #ff9800; // orange
+    }
+    .delete {
+      background: #f44336; // red
+    }
+  }
+
   pre {
-    background: #1e1e1e;       // dark code editor style
+    background: #1e1e1e; // dark code editor style
     color: #f1f1f1;
     padding: 1rem;
     border-radius: 6px;
@@ -24,21 +71,20 @@ section {
     font-family: 'Fira Code', 'Courier New', monospace;
     line-height: 1.5;
 
-    // highlight keys in JSON-like colors if using raw <pre>
     .json-key {
-      color: #9cdcfe; // light blue
+      color: #9cdcfe;
     }
     .json-string {
-      color: #ce9178; // salmon
+      color: #ce9178;
     }
     .json-number {
-      color: #b5cea8; // greenish
+      color: #b5cea8;
     }
     .json-boolean {
-      color: #569cd6; // blue
+      color: #569cd6;
     }
     .json-null {
-      color: #dcdcaa; // yellow
+      color: #dcdcaa;
     }
   }
 }

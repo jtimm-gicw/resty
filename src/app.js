@@ -1,71 +1,56 @@
-import React, { useState, useEffect } from 'react'; 
-import './app.scss';
-
-import Header from './components/header';
-import Footer from './components/footer';
-import Form from './components/form';
-import Results from './components/results';
+// src/App.js
+import React, { useState } from "react";
+import Header from "./components/Header/Header";
+import Form from "./components/Form/Form";
+import Results from "./components/Results/Results";
+import History from "./components/History/History";
+import Footer from "./components/Footer/Footer";
+import "./app.scss";
 
 function App() {
-  // State for request details, data, loading, and history
-  const [request, setRequest] = useState({});
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [history, setHistory] = useState([]);
+  const [data, setData] = useState(null);       
+  const [loading, setLoading] = useState(false); 
+  const [history, setHistory] = useState([]);    
 
-  // Function passed down to <Form /> that updates request state
-  const callApi = (requestParams) => {
-    setRequest(requestParams);
+  // Handle API calls from Form
+  const handleApiCall = async (requestParams) => {
     setLoading(true);
 
-    // Add request to history (for later use)
-    setHistory((prev) => [
-      ...prev,
-      { method: requestParams.method, url: requestParams.url }
-    ]);
+    try {
+      const response = await fetch(requestParams.url, {
+        method: requestParams.method || "GET",
+        headers: requestParams.headers || {},
+        body: requestParams.body ? JSON.stringify(requestParams.body) : null,
+      });
+
+      const result = await response.json();
+      setData(result);
+
+      // Save request to history
+      setHistory((prev) => [
+        ...prev,
+        { url: requestParams.url, method: requestParams.method },
+      ]);
+    } catch (err) {
+      console.error("API call failed:", err);
+      setData({ error: "Request failed" });
+    } finally {
+      setLoading(false);
+    }
   };
-
-  // Whenever request changes, actually make the API call
-  useEffect(() => {
-    const fetchData = async () => {
-      if (request.method && request.url) {
-        try {
-          const options = {
-            method: request.method,
-            headers: { "Content-Type": "application/json" },
-          };
-
-          // Only include body if user provided one
-          if (request.body && (request.method === "POST" || request.method === "PUT")) {
-            options.body = JSON.stringify(request.body);
-          }
-
-          const response = await fetch(request.url, options);
-          const json = await response.json();
-
-          setData(json);
-        } catch (err) {
-          setData({ error: "Something went wrong", details: err.message });
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchData();
-  }, [request]);
 
   return (
     <React.Fragment>
       <Header />
-      <div>Request Method: {request.method}</div>
-      <div>URL: {request.url}</div>
 
-      {/* Pass callApi to Form so user can submit API details */}
-      <Form handleApiCall={callApi} />
+      {/* Form for API requests */}
+      <Form handleApiCall={handleApiCall} />
 
-      {/* Display results */}
-      <Results data={data} loading={loading} history={history} />
+      {/* Side-by-side layout: History (left) & Results (right) */}
+      <div className="results-history-container">
+        <History history={history} />
+        <Results data={data} loading={loading} />
+      </div>
 
       <Footer />
     </React.Fragment>

@@ -32,3 +32,16 @@ body {
     text-align: center;
   }
 }
+
+.results-history-container {
+  display: flex;       // side by side
+  gap: 1.5rem;         // space between history & results
+  margin: 1rem auto;
+  max-width: 1200px;
+
+  > section {
+    flex: 1;           // equal width for History and Results
+  }
+}
+
+

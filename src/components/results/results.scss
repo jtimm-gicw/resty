@@ -61,6 +61,25 @@ section {
     }
   }
 
+  .results-container {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1.5rem auto;
+  max-width: 1000px;
+}
+
+/* Make history and response sections equal width */
+.history,
+.response {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  background: $lightBg;
+  border: 1px solid lighten($primaryColor, 30%);
+  border-left: 5px solid $accentColor;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
   pre {
     background: #1e1e1e; // dark code editor style
     color: #f1f1f1;

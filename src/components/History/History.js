@@ -1,33 +1,27 @@
-// src/components/History/History.js
 import React from 'react';
-import '../Results/results.scss'; // reuse same SCSS for consistent style
+import './history.scss';
 
-function History({ history = [] }) { // ✅ default to empty array to avoid .length errors
+// Phase 4: old API calls are interactive. Selecting one restores its saved response.
+export default function History({ history, onSelect, onClear }) {
   return (
-    <section className="history">
-      {/* =========================
-           Request History
-           Show a list of previous API requests
-      ========================== */}
-      <h2>Request History</h2>
-
-      {history.length === 0 ? (
-        <p>No requests made yet.</p> // if nothing in history
-      ) : (
-        <ul>
-          {history.map((entry, idx) => (
-            <li key={idx}>
-              {/* REST method badge, styled via SCSS */}
-              <span className={`method ${entry.method?.toLowerCase() || ''}`}>
-                {entry.method}
-              </span>
-              &nbsp;→ {entry.url} {/* URL of the request */}
+    <section className="history panel" aria-label="Request history">
+      <div className="history-heading"><h2>Request History</h2>
+        {history.length > 0 && <button type="button" onClick={onClear} className="clear-button">Clear</button>}
+      </div>
+      {history.length === 0 ? <p>No requests made yet.</p> : (
+        <ol>
+          {history.map((entry, index) => (
+            <li key={entry.date + '-' + entry.id + '-' + index}>
+              <button type="button" className="history-entry" onClick={() => onSelect(entry)}
+                aria-label={`Show saved result for ${entry.method} ${entry.url}`}>
+                <span className={`method-pill ${entry.method.toLowerCase()}`}>{entry.method}</span>
+                <span className="history-url">{entry.url}</span>
+                <span className="history-status">{entry.response?.status ?? 'Network error'}</span>
+              </button>
             </li>
           ))}
-        </ul>
+        </ol>
       )}
     </section>
   );
 }
-
-export default History;

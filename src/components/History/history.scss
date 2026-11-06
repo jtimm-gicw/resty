@@ -1,0 +1,10 @@
+.history-heading { display: flex; gap: 1rem; justify-content: space-between; align-items: start; }
+.clear-button { background: white; color: #8d2636; border: 1px solid #be7180; border-radius: 7px; padding: .3rem .65rem; }
+.history ol { padding: 0; margin: 0; list-style: none; }
+.history li + li { margin-top: .6rem; }
+.history-entry { width: 100%; display: flex; align-items: center; gap: .5rem; text-align: left; background: #f2f6fd; border: 1px solid #d6e2f4; border-radius: 9px; padding: .75rem; }
+.history-entry:hover { background: #e2edfc; }
+.method-pill { flex-shrink: 0; font-size: .75rem; font-weight: 800; background: #267ac0; color: white; padding: .2rem .4rem; border-radius: 5px; }
+.method-pill.get { background: #227c42; } .method-pill.post { background: #2766bd; } .method-pill.put, .method-pill.patch { background: #a26806; } .method-pill.delete { background: #b32e39; }
+.history-url { flex: 1; min-width: 0; overflow-wrap: anywhere; font-size: .8rem; }
+.history-status { font-weight: 700; font-size: .75rem; color: #4d5b71; }

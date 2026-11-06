@@ -63,7 +63,7 @@ test('HTTP error response is shown rather than falsely treated as successful', a
   server.use(rest.get(url, (req, res, ctx) => res(ctx.status(404), ctx.json({ message: 'Not found' }))));
   render(<App />);
   submitGet();
-  await waitFor(() => expect(screen.getByText(/HTTP 404/)).toBeInTheDocument());
+  await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('HTTP 404'));
   expect(document.querySelector('#json-pretty').textContent).toContain('Not found');
 });
 

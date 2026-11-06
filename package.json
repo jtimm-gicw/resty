@@ -1,35 +1,29 @@
 {
   "name": "resty",
-  "version": "1.0.0",
-  "description": "",
-  "keywords": [],
-  "main": "src/index.js",
+  "version": "1.1.0",
+  "private": true,
+  "description": "RESTy Code 401 four-phase teaching demo",
   "dependencies": {
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-json-pretty": "^2.2.0",
-    "react-jsonschema-form": "1.8.1",
-    "react-router-dom": "5.2.0",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "5.0.1",
     "sass": "^1.90.0",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "whatwg-fetch": "^3.6.20"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^12.1.5",
+    "@testing-library/jest-dom": "^5.17.0",
+    "msw": "^1.3.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test --env=jsdom"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
   }
 }
